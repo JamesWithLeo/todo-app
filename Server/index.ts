@@ -4,7 +4,8 @@ config({ debug: true });
 // mongoDb Access keys
 const USER = process.env.DB_USER;
 const PASSWORD = process.env.DB_PASSWORD;
-const URI: string = `mongodb+srv://${USER}:${PASSWORD}@clusterleo.wadd7q8.mongodb.net/?authMechanism=SCRAM-SHA-1`;
+const CLUSTER = process.env.DB_CLUSTER;
+const URI: string = `mongodb+srv://${USER}:${PASSWORD}@${CLUSTER}.wadd7q8.mongodb.net/?authMechanism=SCRAM-SHA-1`;
 
 import {
   Collection,

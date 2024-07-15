@@ -18,7 +18,8 @@ require("dotenv/config");
 // mongoDb Access keys
 const USER = process.env.DB_USER;
 const PASSWORD = process.env.DB_PASSWORD;
-const URI = `mongodb+srv://${USER}:${PASSWORD}@clusterleo.wadd7q8.mongodb.net/?authMechanism=SCRAM-SHA-1`;
+const CLUSTER = process.env.DB_CLUSTER;
+const URI = `mongodb+srv://${USER}:${PASSWORD}@${CLUSTER}.wadd7q8.mongodb.net/?authMechanism=SCRAM-SHA-1`;
 const database_1 = require("./database");
 const DATABASE = (0, database_1.ConnectDb)(URI);
 const TODO_COLLECTION = DATABASE.collection("todo");
@@ -66,7 +67,6 @@ SERVER.post("/todo/append", (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 }));
 SERVER.get("/todo/delete/:_id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params._id);
     try {
         yield (0, database_1.deleteTodo)(TODO_COLLECTION, req.params._id).then((deleteResult) => {
             res.status(200).json(deleteResult);
@@ -76,11 +76,19 @@ SERVER.get("/todo/delete/:_id", (req, res) => __awaiter(void 0, void 0, void 0, 
         throw err;
     }
 }));
+SERVER.put("/todo/update/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield (0, database_1.updateTodo)(TODO_COLLECTION, req.params.id, req.body).then((updateResult) => {
+            res.status(200).json(updateResult);
+        });
+    }
+    catch (err) {
+        throw err;
+    }
+}));
 SERVER.get("/todo/strike/:_id/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.query.strike);
     try {
         const bool = req.query.strike === "true";
-        console.log(bool);
         yield (0, database_1.strikeTodo)(TODO_COLLECTION, req.params._id, bool).then((updateResult) => {
             res.status(200).json(updateResult);
         });
