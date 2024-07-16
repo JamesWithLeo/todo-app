@@ -21,7 +21,6 @@ import {
   addTodo,
   deleteTodo,
   strikeTodo,
-  updateTodo,
 } from "./database";
 // initialize database
 const DATABASE: Db = ConnectDb(URI);
@@ -73,17 +72,6 @@ SERVER.get("/todo/delete/:_id", async (req, res) => {
     await deleteTodo(TODO_COLLECTION, req.params._id).then(
       (deleteResult: DeleteResult) => {
         res.status(200).json(deleteResult);
-      },
-    );
-  } catch (err) {
-    throw err;
-  }
-});
-SERVER.put("/todo/update/:id", async (req, res) => {
-  try {
-    await updateTodo(TODO_COLLECTION, req.params.id, req.body).then(
-      (updateResult) => {
-        res.status(200).json(updateResult);
       },
     );
   } catch (err) {

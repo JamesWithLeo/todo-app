@@ -69,17 +69,3 @@ export async function strikeTodo(
     throw err;
   }
 }
-
-export async function updateTodo(coll: Collection, _id: string, doc: Document) {
-  try {
-    return await coll.updateOne(
-      {
-        // prettier-ignore
-        "_id": new ObjectId(_id),
-      },
-      doc,
-    );
-  } catch (err) {
-    throw err;
-  }
-}

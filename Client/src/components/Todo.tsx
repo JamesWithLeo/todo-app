@@ -6,20 +6,6 @@ interface ITodo {
   refresh: () => Promise<void>;
 }
 export default function Todo({ todoObj, refresh }: ITodo): JSX.Element {
-  async function updateTodo() {
-    const id: string = todoObj._id;
-    const response: Response = await fetch("/todo/update/" + id, {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    await response.json().then((value) => {
-      console.log(value);
-      refresh();
-    });
-  }
-
   async function markAsFinish() {
     const id: string = todoObj._id;
     let status: string = "false";
