@@ -13,7 +13,6 @@ import {
   WithId,
   Document,
   DeleteResult,
-  serialize,
   UpdateResult,
 } from "mongodb";
 import {
@@ -24,13 +23,15 @@ import {
   strikeTodo,
   updateTodo,
 } from "./database";
+// initialize database
 const DATABASE: Db = ConnectDb(URI);
 const TODO_COLLECTION: Collection = DATABASE.collection("todo");
 
-// server config
+// initialize server
 import express from "express";
 const SERVER = express();
 const PORT: Number = 8080;
+// use parser middleware
 SERVER.use(express.json());
 SERVER.get("/todo", async (req, res) => {
   try {
@@ -55,7 +56,6 @@ SERVER.get("/todo", async (req, res) => {
   }
 });
 SERVER.post("/todo/append", async (req, res) => {
-  console.log(req.body);
   try {
     await addTodo(TODO_COLLECTION, req.body)
       .then((insertResult) => {

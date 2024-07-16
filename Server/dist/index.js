@@ -21,12 +21,14 @@ const PASSWORD = process.env.DB_PASSWORD;
 const CLUSTER = process.env.DB_CLUSTER;
 const URI = `mongodb+srv://${USER}:${PASSWORD}@${CLUSTER}.wadd7q8.mongodb.net/?authMechanism=SCRAM-SHA-1`;
 const database_1 = require("./database");
+// initialize database
 const DATABASE = (0, database_1.ConnectDb)(URI);
 const TODO_COLLECTION = DATABASE.collection("todo");
-// server config
+// initialize server
 const express_1 = __importDefault(require("express"));
 const SERVER = (0, express_1.default)();
 const PORT = 8080;
+// use parser middleware
 SERVER.use(express_1.default.json());
 SERVER.get("/todo", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

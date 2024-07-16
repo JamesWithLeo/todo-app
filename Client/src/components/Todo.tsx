@@ -44,25 +44,27 @@ export default function Todo({ todoObj, refresh }: ITodo): JSX.Element {
   }
 
   return (
-    <div
-      onDoubleClick={markAsFinish}
-      className="group flex h-auto cursor-default select-none items-center justify-between gap-4 rounded bg-white p-2 duration-300 ease-in-out sm:p-2 lg:h-max"
-    >
-      <>
-        {todoObj.status === false ? (
-          <>
-            <h1>{todoObj.todo}</h1>
-          </>
-        ) : (
-          <>
-            <h1 className="text-sm line-through">{todoObj.todo} </h1>
-          </>
-        )}
-      </>
-      <div className="flex flex-col justify-center gap-2 text-center">
+    <div className="group flex w-full gap-1 sm:h-full">
+      <div
+        onClick={markAsFinish}
+        className="group flex h-auto w-full cursor-default select-none items-center justify-between rounded bg-white p-2 duration-300 ease-in-out sm:p-2 lg:h-max"
+      >
+        <>
+          {todoObj.status === false ? (
+            <>
+              <h1>{todoObj.todo}</h1>
+            </>
+          ) : (
+            <>
+              <h1 className="text-sm line-through">{todoObj.todo} </h1>
+            </>
+          )}
+        </>
+      </div>
+      <div className="hidden h-full w-max flex-col justify-center gap-2 text-center group-hover:flex">
         <button
           onClick={deleteTodo}
-          className="hidden w-full items-center justify-center rounded bg-slate-200 px-2 py-0 text-center group-hover:flex"
+          className="h-full w-full items-center justify-center rounded bg-orange-200 px-2 py-0 text-center text-orange-500"
         >
           Delete
         </button>
@@ -120,7 +122,7 @@ export function NewTodo({ isVisible, refresh }: INewTodo): JSX.Element {
                 placeholder="Brew Coffee"
                 id="titleElement"
                 autoFocus
-                className="md:max-h-1/2 sm:max-h-auto max-h-full min-h-12 w-full text-pretty rounded border bg-white px-2 py-1 shadow-inner focus:h-full active:h-full lg:max-h-full"
+                className="md:max-h-1/2 sm:max-h-auto max-h-full min-h-12 w-full text-pretty rounded border bg-white px-2 py-1 shadow-inner outline-slate-400 focus:h-full active:h-full lg:max-h-full"
               />
             </div>
             <div className="flex flex-col gap-2">
