@@ -54,7 +54,6 @@ SERVER.get("/todo", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 }));
 SERVER.post("/todo/append", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     try {
         yield (0, database_1.addTodo)(TODO_COLLECTION, req.body)
             .then((insertResult) => {
@@ -72,16 +71,6 @@ SERVER.get("/todo/delete/:_id", (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         yield (0, database_1.deleteTodo)(TODO_COLLECTION, req.params._id).then((deleteResult) => {
             res.status(200).json(deleteResult);
-        });
-    }
-    catch (err) {
-        throw err;
-    }
-}));
-SERVER.put("/todo/update/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, database_1.updateTodo)(TODO_COLLECTION, req.params.id, req.body).then((updateResult) => {
-            res.status(200).json(updateResult);
         });
     }
     catch (err) {

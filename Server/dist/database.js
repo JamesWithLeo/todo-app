@@ -14,7 +14,6 @@ exports.fetchTodo = fetchTodo;
 exports.addTodo = addTodo;
 exports.deleteTodo = deleteTodo;
 exports.strikeTodo = strikeTodo;
-exports.updateTodo = updateTodo;
 const dotenv_1 = require("dotenv");
 require("dotenv/config");
 (0, dotenv_1.config)({ debug: true });
@@ -74,19 +73,6 @@ function strikeTodo(coll, _id, strike) {
             // prettier-ignore
             const bool = strike !== null && strike !== void 0 ? strike : false;
             return yield coll.updateOne({ _id: new mongodb_1.ObjectId(_id) }, { $set: { status: bool } });
-        }
-        catch (err) {
-            throw err;
-        }
-    });
-}
-function updateTodo(coll, _id, doc) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            return yield coll.updateOne({
-                // prettier-ignore
-                "_id": new mongodb_1.ObjectId(_id),
-            }, doc);
         }
         catch (err) {
             throw err;

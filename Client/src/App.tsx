@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Todo, { NewTodo } from "./components/Todo";
+import Todo from "./components/Todo";
+import { NewTodo } from "./components/NewTodo";
 import ServerDownFallback from "./components/ServerDownFallback";
 export type todoTypeFace = {
   todo: string;
