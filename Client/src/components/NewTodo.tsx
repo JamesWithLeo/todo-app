@@ -55,7 +55,7 @@ export function NewTodo({ isVisible, refresh }: INewTodo): JSX.Element {
                 onClick={saveNewTodo}
                 className="w-full rounded bg-blue-300 px-2 py-1 text-gray-100 shadow hover:text-white active:bg-blue-200"
               >
-                Save
+                Add
               </button>
               <button
                 onClick={clear}
