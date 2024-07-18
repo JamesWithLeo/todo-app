@@ -62,7 +62,7 @@ function App() {
               ) : (
                 <FontAwesomeIcon
                   icon={faGear}
-                  className="h-max w-max animate-spin text-xl text-slate-400"
+                  className="h-max w-max animate-spin text-base text-slate-400"
                 />
               )}
             </div>
