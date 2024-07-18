@@ -56,18 +56,20 @@ function App() {
         {newTodo ? newTodo : null}
         <div className="flex h-full flex-col gap-2 sm:max-h-96 sm:py-0 md:h-max lg:h-full lg:flex-row">
           {todos?.length !== 0 ? (
-            <div className="flex h-full w-full flex-col gap-2 overflow-y-auto rounded-lg border px-2 py-4 shadow sm:w-96 lg:h-auto lg:max-h-96 lg:w-96 lg:gap-2">
+            <>
               {todos?.length ? (
-                <>{todos}</>
+                <div className="flex h-full w-full flex-col gap-2 overflow-y-auto rounded-lg border px-2 py-4 shadow sm:w-96 lg:h-auto lg:max-h-96 lg:w-96 lg:gap-2">
+                  <>{todos}</>
+                </div>
               ) : (
                 <div className="flex">
                   <FontAwesomeIcon
                     icon={faGear}
-                    className="h-max w-max animate-spin text-base text-slate-400"
+                    className="text- animate-spin text-slate-400"
                   />
                 </div>
               )}
-            </div>
+            </>
           ) : (
             <>
               {newTodo ? null : (
