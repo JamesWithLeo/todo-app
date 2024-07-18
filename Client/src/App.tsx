@@ -1,4 +1,6 @@
 import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import Todo from "./components/Todo";
 import { NewTodo } from "./components/NewTodo";
@@ -55,7 +57,14 @@ function App() {
         <div className="flex h-full flex-col gap-2 sm:max-h-96 sm:py-0 md:h-max lg:h-full lg:flex-row">
           {todos?.length !== 0 ? (
             <div className="flex h-full w-full flex-col gap-2 overflow-y-auto rounded-lg border px-2 py-4 shadow sm:w-96 lg:h-auto lg:max-h-96 lg:w-96 lg:gap-2">
-              {todos}
+              {todos?.length ? (
+                <>{todos}</>
+              ) : (
+                <FontAwesomeIcon
+                  icon={faGear}
+                  className="animate-spin text-xl text-slate-400"
+                />
+              )}
             </div>
           ) : (
             <>
