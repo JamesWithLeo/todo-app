@@ -60,10 +60,12 @@ function App() {
               {todos?.length ? (
                 <>{todos}</>
               ) : (
-                <FontAwesomeIcon
-                  icon={faGear}
-                  className="h-max w-max animate-spin text-base text-slate-400"
-                />
+                <div className="flex">
+                  <FontAwesomeIcon
+                    icon={faGear}
+                    className="h-max w-max animate-spin text-base text-slate-400"
+                  />
+                </div>
               )}
             </div>
           ) : (
