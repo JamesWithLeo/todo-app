@@ -30,6 +30,10 @@ const SERVER = (0, express_1.default)();
 const PORT = 8080;
 // use parser middleware
 SERVER.use(express_1.default.json());
+SERVER.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("hello World");
+    res.status(200).json({ status: "Connected" });
+}));
 SERVER.get("/todo", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         DATABASE.command({ ping: 1 })

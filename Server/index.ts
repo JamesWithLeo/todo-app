@@ -23,15 +23,17 @@ import {
   strikeTodo,
 } from "./database";
 // initialize database
+import cors from "cors";
 const DATABASE: Db = ConnectDb(URI);
 const TODO_COLLECTION: Collection = DATABASE.collection("todo");
-
 // initialize server
 import express from "express";
+
 const SERVER = express();
 const PORT: Number = 8080;
 // use parser middleware
 SERVER.use(express.json());
+SERVER.use(cors());
 SERVER.get("/", async (req, res) => {
   console.log("hello World");
   res.status(200).json({ status: "Connected" });
