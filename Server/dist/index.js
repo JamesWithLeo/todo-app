@@ -22,6 +22,7 @@ const CLUSTER = process.env.DB_CLUSTER;
 const URI = `mongodb+srv://${USER}:${PASSWORD}@${CLUSTER}.wadd7q8.mongodb.net/?authMechanism=SCRAM-SHA-1`;
 const database_1 = require("./database");
 // initialize database
+const cors_1 = __importDefault(require("cors"));
 const DATABASE = (0, database_1.ConnectDb)(URI);
 const TODO_COLLECTION = DATABASE.collection("todo");
 // initialize server
@@ -30,10 +31,10 @@ const SERVER = (0, express_1.default)();
 const PORT = 8080;
 // use parser middleware
 SERVER.use(express_1.default.json());
-SERVER.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("hello World");
-    res.status(200).json({ status: "Connected" });
-}));
+SERVER.use((0, cors_1.default)());
+// SERVER.get("/", async (req, res) => {
+//   res.status(200).json({ status: "Connected" });
+// });
 SERVER.get("/todo", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         DATABASE.command({ ping: 1 })

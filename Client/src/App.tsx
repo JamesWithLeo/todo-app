@@ -17,7 +17,7 @@ function App() {
   const [IsConnectedToServer, setIsConnectedToServer] =
     useState<boolean>(false);
   async function fetchTodo() {
-    await fetch("/")
+    await fetch("/todo")
       .then(async (response) => {
         await response.json().then((value) => {
           console.log(value);
