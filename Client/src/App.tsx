@@ -20,8 +20,6 @@ function App() {
     await fetch("/todo")
       .then(async (response) => {
         await response.json().then((value) => {
-          console.log(value);
-
           const todoElements: JSX.Element[] = value.todos.map(
             (todo: todoTypeFace) => {
               return (
