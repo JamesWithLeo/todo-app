@@ -35,9 +35,9 @@ function App() {
           setIsConnectedToServer(true);
         });
       })
-      // .catch((rejResponse) => {
-      //   setTodos([<ServerDownFallback />]);
-      // });
+      .catch((rejResponse) => {
+        setTodos([<ServerDownFallback />]);
+      });
   }
   useEffect(() => {
     fetchTodo();

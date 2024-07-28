@@ -34,10 +34,9 @@ const PORT: Number = 8080;
 // use parser middleware
 SERVER.use(express.json());
 SERVER.use(cors());
-SERVER.get("/", async (req, res) => {
-  console.log("hello World");
-  res.status(200).json({ status: "Connected" });
-});
+// SERVER.get("/", async (req, res) => {
+//   res.status(200).json({ status: "Connected" });
+// });
 SERVER.get("/todo", async (req, res) => {
   try {
     DATABASE.command({ ping: 1 })
