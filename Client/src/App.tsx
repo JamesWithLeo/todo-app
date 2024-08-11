@@ -49,7 +49,7 @@ function App() {
   }
   return (
     <div className="flex h-svh w-full flex-col items-center justify-end gap-4 bg-gray-50 p-4 sm:justify-center lg:flex-col">
-      <h1 className="text-3xl font-bold text-slate-400">To do App</h1>
+      <h1 className="text-3xl font-bold text-slate-400">To do</h1>
       <div className="flex h-full w-full flex-col-reverse sm:h-max sm:w-auto sm:gap-2 md:flex-row lg:h-max lg:flex-col">
         {newTodo ? newTodo : null}
         <div className="flex h-full flex-col gap-2 sm:max-h-96 sm:py-0 md:h-max lg:h-full lg:flex-row">
