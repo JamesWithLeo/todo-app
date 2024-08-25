@@ -1,39 +1,22 @@
 import { todoTypeFace } from "../App";
-import * as React from "react";
+import { useDeleteTodo, useMarkTodo } from "../todoService";
 
-interface ITodo {
-  todoObj: todoTypeFace;
-  refresh: () => Promise<void>;
-}
-export default function Todo({ todoObj, refresh }: ITodo): JSX.Element {
+export default function Todo({ todoObj }: { todoObj: todoTypeFace }) {
+  const { mutateAsync: deleteTodo, isPending: isDeleting } = useDeleteTodo();
+  const { mutateAsync: markTodo, isPending: isMarking } = useMarkTodo();
   async function markAsFinish() {
-    const id: string = todoObj._id;
-    let status: string = "false";
-    if (todoObj.status === false) {
-      status = "true";
-    }
-    const response: Response = await fetch(
-      "/todo/strike/" + id + "/?strike=" + status,
-    );
-    await response.json().then((value) => {
-      console.log(value);
-      refresh();
-    });
+    if (!isMarking) markTodo({ id: todoObj._id, status: !todoObj.status });
   }
-  async function deleteTodo() {
+  async function HandeDeleteTodo() {
     const id: string = todoObj._id;
-    const response: Response = await fetch("/todo/delete/" + id);
-    await response.json().then((value) => {
-      console.log(value);
-      refresh();
-    });
+    if (!isDeleting) deleteTodo(id);
   }
 
   return (
     <div className="group flex w-full gap-1 sm:h-full">
       <div
-        onClick={markAsFinish}
         className="group flex h-auto w-full cursor-default select-none items-center justify-between rounded bg-white p-2 duration-300 ease-in-out sm:p-2 lg:h-max"
+        onClick={markAsFinish}
       >
         <>
           {todoObj.status === false ? (
@@ -49,7 +32,7 @@ export default function Todo({ todoObj, refresh }: ITodo): JSX.Element {
       </div>
       <div className="hidden h-full w-max flex-col justify-center gap-2 text-center group-hover:flex">
         <button
-          onClick={deleteTodo}
+          onClick={HandeDeleteTodo}
           className="h-full w-full items-center justify-center rounded bg-orange-200 px-2 py-0 text-center text-orange-500"
         >
           Delete

@@ -1,9 +1,11 @@
+import { useCreateTodo } from "../todoService";
+
 interface INewTodo {
   isVisible: boolean;
-  refresh: () => Promise<void>;
 }
 
-export function NewTodo({ isVisible, refresh }: INewTodo): JSX.Element {
+export function NewTodo({ isVisible }: INewTodo): JSX.Element {
+  const { mutateAsync: createNew, isPending: isCreating } = useCreateTodo();
   function clear() {
     const titleValue = document.getElementById(
       "titleElement",
@@ -15,26 +17,8 @@ export function NewTodo({ isVisible, refresh }: INewTodo): JSX.Element {
     const titleValue = document.getElementById(
       "titleElement",
     ) as HTMLInputElement;
-    if (titleValue.value !== "") {
-      const todoObj = JSON.stringify({
-        todo: titleValue.value,
-        status: false,
-      });
-      console.log(todoObj);
-      await fetch("/todo/append", {
-        method: "POST",
-        body: todoObj,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }).then((result) => {
-        refresh();
-        clear();
-        result.json().then((value) => {
-          console.log(value);
-        });
-      });
-    }
+    if (!titleValue.value) return;
+    if (!isCreating) createNew(titleValue.value);
   }
   return (
     <>

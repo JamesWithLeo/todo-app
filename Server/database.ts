@@ -44,7 +44,7 @@ export async function addTodo(coll: Collection, doc: Document) {
 
 export async function deleteTodo(coll: Collection, _id: string) {
   try {
-    return await coll.deleteOne({
+    return await coll.findOneAndDelete({
       // prettier-ignore
       "_id": new ObjectId(_id),
     });

@@ -74,11 +74,9 @@ SERVER.post("/todo/append", async (req, res) => {
 });
 SERVER.get("/todo/delete/:_id", async (req, res) => {
   try {
-    await deleteTodo(TODO_COLLECTION, req.params._id).then(
-      (deleteResult: DeleteResult) => {
-        res.status(200).json(deleteResult);
-      },
-    );
+    await deleteTodo(TODO_COLLECTION, req.params._id).then((deleteResult) => {
+      res.status(200).json(deleteResult);
+    });
   } catch (err) {
     throw err;
   }

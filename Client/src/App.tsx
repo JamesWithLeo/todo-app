@@ -1,10 +1,10 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Todo from "./components/Todo";
 import { NewTodo } from "./components/NewTodo";
-import ServerDownFallback from "./components/ServerDownFallback";
+import { useQuery } from "@tanstack/react-query";
 export type todoTypeFace = {
   todo: string;
   _id: string;
@@ -12,79 +12,67 @@ export type todoTypeFace = {
 };
 
 function App() {
-  const [todos, setTodos] = useState<JSX.Element[] | null>(null);
-  const [newTodo, setNewTodo] = useState<JSX.Element | null>(null);
-  const [IsConnectedToServer, setIsConnectedToServer] =
-    useState<boolean>(false);
-  async function fetchTodo() {
-    await fetch("/todo")
-      .then(async (response) => {
-        await response.json().then((value) => {
-          const todoElements: JSX.Element[] = value.todos.map(
-            (todo: todoTypeFace) => {
-              return (
-                <>
-                  <Todo todoObj={todo} refresh={fetchTodo} />
-                </>
-              );
-            },
-          );
-          setTodos(todoElements);
-          setIsConnectedToServer(true);
-        });
-      })
-      .catch((rejResponse) => {
-        setTodos([<ServerDownFallback />]);
-      });
-  }
-  useEffect(() => {
-    fetchTodo();
-  }, []);
-  function openNewTodo() {
-    setNewTodo(<NewTodo isVisible={true} refresh={fetchTodo} />);
-  }
+  const query = useQuery({
+    queryKey: ["todos"],
+    queryFn: async () => {
+      const response = await fetch("/todo").then((response) =>
+        response.json().then((value) => value),
+      );
+      console.log(response);
+      return response.todos;
+    },
+  });
 
-  function cancelNewTodo() {
-    setNewTodo(null);
-  }
+  const [newTodo, setNewTodo] = useState<Boolean>(false);
+
   return (
     <div className="flex h-svh w-full flex-col items-center justify-end gap-4 bg-gray-50 p-4 sm:justify-center lg:flex-col">
       <h1 className="text-3xl font-bold text-slate-400">To do App</h1>
       <div className="flex h-full w-full flex-col-reverse sm:h-max sm:w-auto sm:gap-2 md:flex-row lg:h-max lg:flex-col">
-        {newTodo ? newTodo : null}
+        {newTodo ? <NewTodo isVisible={true} /> : null}
         <div className="flex h-full flex-col gap-2 sm:max-h-96 sm:py-0 md:h-max lg:h-full lg:flex-row">
-          {todos?.length !== 0 ? (
+          {!query.isLoading ? (
             <>
-              {todos?.length ? (
+              {query && query.data ? (
                 <div className="flex h-full w-full flex-col gap-2 overflow-y-auto rounded-lg border px-2 py-4 shadow sm:w-96 lg:h-auto lg:max-h-96 lg:w-96 lg:gap-2">
-                  <>{todos}</>
+                  <>
+                    {query.data.map((value: todoTypeFace) => {
+                      return (
+                        <>
+                          <Todo todoObj={value} />
+                        </>
+                      );
+                    })}
+                  </>
                 </div>
               ) : (
-                <div className="flex">
-                  <FontAwesomeIcon
-                    icon={faGear}
-                    className="text- animate-spin text-slate-400"
-                  />
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              {newTodo ? null : (
                 <>
-                  <h1 className="flex h-full items-center justify-center align-middle text-base font-bold text-slate-400">
-                    No to do yet
-                  </h1>
+                  {newTodo ? null : (
+                    <>
+                      <h1 className="flex h-full items-center justify-center align-middle text-base font-bold text-slate-400">
+                        No to do yet
+                      </h1>
+                    </>
+                  )}
                 </>
               )}
             </>
+          ) : (
+            <div className="flex">
+              <FontAwesomeIcon
+                icon={faGear}
+                className="text- animate-spin text-slate-400"
+              />
+            </div>
           )}
-          {!IsConnectedToServer ? null : (
+          {!query.isSuccess ? null : (
             <div className="max-w flex h-max w-full flex-col gap-4 rounded-lg border shadow lg:h-full lg:w-max lg:px-2 lg:py-4">
               {newTodo ? (
                 <>
                   <button
-                    onClick={cancelNewTodo}
+                    onClick={() => {
+                      setNewTodo(false);
+                    }}
                     className="rounded px-2 py-1 text-gray-500 hover:bg-white hover:text-gray-600"
                   >
                     Cancel
@@ -93,7 +81,9 @@ function App() {
               ) : (
                 <button
                   className="rounded px-2 py-1 text-gray-500 hover:bg-white hover:text-gray-600"
-                  onClick={openNewTodo}
+                  onClick={() => {
+                    setNewTodo(true);
+                  }}
                 >
                   New
                 </button>
