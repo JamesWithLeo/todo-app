@@ -34,17 +34,17 @@ function App() {
           {!query.isLoading ? (
             <>
               {query && query.data ? (
-                <div className="flex h-full w-full flex-col gap-2 overflow-y-auto rounded-lg border px-2 py-4 shadow sm:w-96 lg:h-auto lg:max-h-96 lg:w-96 lg:gap-2">
-                  <>
+                <>
+                  <div className="flex h-full w-full flex-col gap-2 overflow-y-auto rounded-lg border px-2 py-4 shadow sm:w-96 lg:h-auto lg:max-h-96 lg:w-96 lg:gap-2">
                     {query.data.map((value: todoTypeFace) => {
                       return (
                         <>
-                          <Todo todoObj={value} />
+                          <Todo todoObj={value} key={value._id} />
                         </>
                       );
                     })}
-                  </>
-                </div>
+                  </div>
+                </>
               ) : (
                 <>
                   {newTodo ? null : (
@@ -61,7 +61,7 @@ function App() {
             <div className="flex">
               <FontAwesomeIcon
                 icon={faGear}
-                className="text- animate-spin text-slate-400"
+                className="animate-spin text-center text-slate-400"
               />
             </div>
           )}
